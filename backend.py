@@ -28,7 +28,7 @@ def get_imds_token():
 
 def process_request():
     while True:
-        response = sqs.receive_message(QueueUrl=REQUEST_QUEUE, MaxNumberOfMessages=1, WaitTimeSeconds=2)
+        response = sqs.receive_message(QueueUrl=REQUEST_QUEUE, MaxNumberOfMessages=1, WaitTimeSeconds=20)
         
         if 'Messages' in response:
             message = response['Messages'][0]
