@@ -28,8 +28,7 @@ def get_imds_token():
 
 def process_request():
     while True:
-        response = sqs.receive_message(QueueUrl=REQUEST_QUEUE, MaxNumberOfMessages=1, WaitTimeSeconds=20)
-        
+        response = sqs.receive_message(QueueUrl=REQUEST_QUEUE, MaxNumberOfMessages=1)
         if 'Messages' in response:
             message = response['Messages'][0]
             file_name = message['Body']
@@ -43,7 +42,6 @@ def process_request():
                 )
                 prediction = result.stdout.strip() 
             except Exception as e:
-                print(f"Error during face recognition: {e}")
                 prediction = "Unknown"
             s3.put_object(Bucket=OUTPUT_BUCKET, Key=file_name, Body=prediction)
             sqs.send_message(QueueUrl=RESPONSE_QUEUE, MessageBody=f"{file_name}:{prediction}")

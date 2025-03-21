@@ -6,7 +6,7 @@ sqs = boto3.client('sqs', region_name="us-east-1")
 ec2 = boto3.client('ec2', region_name="us-east-1")
 
 REQUEST_QUEUE = "1233521057-req-queue"
-APP_TIER_INSTANCE_PREFIX = "app-tier-instance"
+APP_TIER_INSTANCE_PREFIX = "app-tier-instance-"
 
 def get_pending_requests():
     response = sqs.get_queue_attributes(

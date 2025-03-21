@@ -41,9 +41,8 @@ def handle_request():
         if file_name in image_results:
             result = image_results.pop(file_name)
             return f"{file_name}:{result}"
-
-response_thread = threading.Thread(target=process_response_queue, daemon=True)
-response_thread.start()
+        time.sleep(0.01)
 
 if __name__ == "__main__":
+    threading.Thread(target=process_response_queue, daemon=True).start()
     app.run(host="0.0.0.0", port=8000, threaded=True)
